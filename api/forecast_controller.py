@@ -63,6 +63,9 @@ class ForecastController:
                     if rowDate.hour == 12:
                         weatherDay = weatherRow['weather'][0]['icon']
                 else:
+                    #actualizo el current day
+                    currentDay = rowDate.day
+
                     #Cambio el dia, entonces hay que subir los acumulados anteriores calculando el promedio
                     tempDay = round(float(acumDay / iDay), 2)
                     tempNight = round(float(acumNight / iNight), 2)
