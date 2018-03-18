@@ -1,39 +1,13 @@
 import json
 import requests
+import codecs
 from flask import jsonify
 from model.date_time import DateTime
 
-#La agrego ahora solo para usarla de ejemplo
-LISTA_EJEMPLO = [
-  {
-    "id": 707860,
-    "name": "Hurzuf",
-    "country": "UA",
-    "coord": {
-      "lon": 34.283333,
-      "lat": 44.549999
-    }
-  },
-  {
-    "id": 519188,
-    "name": "Novinki",
-    "country": "RU",
-    "coord": {
-      "lon": 37.666668,
-      "lat": 55.683334
-    }
-  },
-  {
-    "id": 1283378,
-    "name": "Gorkhā",
-    "country": "NP",
-    "coord": {
-      "lon": 84.633331,
-      "lat": 28
-    }
-  }
-]
+#Ruta para los archivos de las ciudades
+RUTA = 'data/ciudades/ciudades'
 
+#La agrego ahora solo para usarla de ejemplo
 class CiudadesController:
     """Esta clase se encarga de manejar la informacion de las ciudades"""
 
@@ -42,8 +16,10 @@ class CiudadesController:
 
     def obtenerListaCiudadesPaginado(self, pagina):
         """Devuelve el listado de ciudades de una determinada pagina"""
-        resultado = self.obtenerListaCiudades(LISTA_EJEMPLO)
-        return resultado
+        ruta = RUTA + str(pagina) + ".json"
+        lista = json.load(codecs.open(ruta, 'r', 'utf-8'))
+        #Procesamos la info para devolver lo que se necesita
+        return self.obtenerListaCiudades(lista)
 
     def obtenerListaCiudades(self, listaOriginal):
         """Armamos la lista de ciudades a devolver"""
