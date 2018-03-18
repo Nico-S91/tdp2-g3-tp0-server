@@ -18,7 +18,8 @@ class ForecastController:
         """ Este metodo devuelve el clima de los siguientes
             5 dias para una determinada ciudad.
         """
-        url = self._getUrl(city_id)
+        # url = self._getUrl(city_id)
+        url = "http://demo9410278.mockable.io/forecast"
         forecastResponse = request(url)
         jsonData = json.loads(forecastResponse)
 
@@ -56,7 +57,7 @@ class ForecastController:
                     dayForecast = {}
 
             result['code'] = 200
-            return result
+            return jsonify(result)
         else:
             #se produjo un error
             result['code'] = 500
