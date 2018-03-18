@@ -23,6 +23,14 @@ class ForecastController:
         forecastResponse = requests.get(url)
         jsonData = forecastResponse.json()
 
+        currentDay = None
+        iDay = 0
+        iNight = 0
+        acumDay = 0
+        acumNight = 0
+        weatherDay = ""
+        weatherNight = ""
+
         result = {
             "code": 0,
             "forecast": []
@@ -38,22 +46,34 @@ class ForecastController:
             for weatherRow in weatherList:
                 rowDate = self._parseTime(weatherRow['dt_txt'])
 
-                if rowDate.hour == 00:
-                    #creo el clima a la noche
-                    temp = round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
-                    weather = weatherRow['weather'][0]['icon']
+                if currentDay == None:
+                    currentDay = rowDate.day
+
+                if rowDate.day == currentDay:
+                    #mientras que nos mantengamos en el dia, agregar a las temps de dia o noche segun corresponda.
+                    if (rowDate.hour == 21 or rowDate.hour == 0 or rowDate.hour == 3 or rowDate.hour == 6):
+                        acumNight = acumNight + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
+                        iNight = iNight + 1
+                    else:
+                        acumDay = acumDay + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
+                        iDay = iDay + 1
+
+                    if rowDate.hour = 0:
+                        weatherNight = weatherRow['weather'][0]['icon']
+                    if rowDate.hour = 12:
+                        weatherDay = weatherRow['weather'][0]['icon']
+                else:
+                    #Cambio el dia, entonces hay que subir los acumulados anteriores calculando el promedio
+                    tempDay = round(float(acumDay / iDay), 2)
+                    tempNight = round(float(acumNight / iNight), 2)
                     dayForecast["night"] = {
-                            "temp": temp,
-                            "weather": weather
-                        }
-                elif rowDate.hour == 12:
-                    #creo el clima a la mañana
-                    temp = round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
-                    weather = weatherRow['weather'][0]['icon']
+                        "temp": tempNight,
+                        "weather": weatherNight
+                    }
                     dayForecast["day"] = {
-                            "temp": temp,
-                            "weather": weather
-                        }
+                        "temp": tempDay,
+                        "weather": weatherDay
+                    }
                     result['forecast'].append(dayForecast)
                     dayForecast = {}
 
@@ -62,6 +82,7 @@ class ForecastController:
         else:
             #se produjo un error
             result['code'] = 500
+            result['forecast'] = []
             return result
             
 
