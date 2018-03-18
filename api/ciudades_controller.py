@@ -17,17 +17,23 @@ class CiudadesController:
     def obtenerListaCiudadesPaginado(self, pagina):
         """Devuelve el listado de ciudades de una determinada pagina"""
         ruta = RUTA + str(pagina) + ".json"
-        lista = json.load(codecs.open(ruta, 'r', 'utf-8'))
-        #Procesamos la info para devolver lo que se necesita
-        return self.obtenerListaCiudades(lista)
+        try:
+            lista = json.load(codecs.open(ruta, 'r', 'utf-8'))
+            #Procesamos la info para devolver lo que se necesita
+            return self.obtenerListaCiudades(lista)
+        except:
+            return []
 
     def obtenerListaCiudades(self, listaOriginal):
         """Armamos la lista de ciudades a devolver"""
-        lista = []
-        for ciudad in listaOriginal:
-            infociudad = {}
-            infociudad['id'] = ciudad['id']
-            infociudad['name'] = ciudad['name']
-            infociudad['country'] = ciudad['country']
-            lista.append(infociudad)
-        return lista
+        if listaOriginal:
+            lista = []
+            for ciudad in listaOriginal:
+                infociudad = {}
+                infociudad['id'] = ciudad['id']
+                infociudad['name'] = ciudad['name']
+                infociudad['country'] = ciudad['country']
+                lista.append(infociudad)
+            return lista
+        else:
+            return []
