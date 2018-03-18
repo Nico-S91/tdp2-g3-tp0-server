@@ -16,11 +16,15 @@ class CiudadesController:
 
     def obtenerListaCiudadesPaginado(self, pagina):
         """Devuelve el listado de ciudades de una determinada pagina"""
+        lista = self.obtenerCiudadesArchivo(pagina)
+        return self.obtenerListaCiudades(lista)
+
+    def obtenerCiudadesArchivo(self, pagina):
+        """Devuelve una lista de ciudades de la pagina correspondiente"""
         ruta = RUTA + str(pagina) + ".json"
         try:
             lista = json.load(codecs.open(ruta, 'r', 'utf-8'))
-            #Procesamos la info para devolver lo que se necesita
-            return self.obtenerListaCiudades(lista)
+            return lista
         except:
             return []
 
