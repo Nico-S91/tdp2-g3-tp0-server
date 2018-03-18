@@ -5,6 +5,7 @@ from model import date_time
 
 FORECAST_API_KEY = "aa0b96da7387272d1b44bf3384937863"
 FORECAST_URL = "api.openweathermap.org/data/2.5/forecast"
+KELVIN_CONSTANT = 273.15
 
 class ForecastController:
     """ Clase que contiene los metodos de comunicacion con la 
@@ -19,8 +20,48 @@ class ForecastController:
         """
         url = self._getUrl(city_id)
         forecastResponse = request(url)
-        json_data = json.loads(forecastResponse)
-        return jsonify(json_data)
+        jsonData = json.loads(forecastResponse)
+
+        result = {
+            "code": 0,
+            "forecast": []
+        }
+
+        dayForecast = {}
+
+        if jsonData['cod'] == 200
+            weatherList = jsonData['list']
+            for weatherRow in weatherList:
+                rowDate = self._parseTime(weatherRow['dt_txt'])
+
+                if rowDate.hour == 00:
+                    #creo el clima a la noche
+                    temp = float(rowDate['main']['temp']) - KELVIN_CONSTANT
+                    weather = rowDate['weather'][0]['icon']
+                    dayForecast.append("night": 
+                        {
+                            "temp": temp,
+                            "weather": weather
+                        })
+                else if rowDate.hour == 12:
+                    #creo el clima a la mañana
+                    temp = float(rowDate['main']['temp']) - KELVIN_CONSTANT
+                    weather = rowDate['weather'][0]['icon']
+                    dayForecast.append("day":
+                        {
+                            "temp": temp,
+                            "weather": weather
+                        })
+                    result['forecast'].append(dayForecast)
+                    dayForecast = {}
+
+            result['code'] = 200
+            return result
+        else:
+            #se produjo un error
+            result['code'] = 500
+            return result
+            
 
     def _getUrl(self, city_id):
         """ Devuelve la url formada para pegarle a la api del clima
