@@ -1,5 +1,4 @@
 # tdp2-g3-tp0-server
-<<<<<<< HEAD
 Proyecto del servidor para el trabajo practico 0 de la materia Taller de desarrollo de proyectos II
 
 ## Prerequisitos
@@ -43,5 +42,3 @@ La aplicacion esta hosteada en Heroku, para acceder a ella:
 
 ## Tests
 Para correr los tests de la aplicación, correr el comando **pytest test/**
-
->>>>>>> 9c3d03a254ac45ba6e765f0b68b0fc365271514b
