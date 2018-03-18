@@ -4,7 +4,7 @@ from flask import jsonify
 from model.date_time import DateTime
 
 FORECAST_API_KEY = "aa0b96da7387272d1b44bf3384937863"
-FORECAST_URL = "api.openweathermap.org/data/2.5/forecast"
+FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
 KELVIN_CONSTANT = 273.15
 
 class ForecastController:
@@ -18,12 +18,10 @@ class ForecastController:
         """ Este metodo devuelve el clima de los siguientes
             5 dias para una determinada ciudad.
         """
-        # url = self._getUrl(city_id)
-        url = "http://demo9410278.mockable.io/forecast"
+        url = self._getUrl(city_id)
+        # url = "http://demo9410278.mockable.io/forecast"
         forecastResponse = requests.get(url)
         jsonData = forecastResponse.json()
-
-        print(jsonData)
 
         result = {
             "code": 0,
@@ -42,7 +40,7 @@ class ForecastController:
 
                 if rowDate.hour == 00:
                     #creo el clima a la noche
-                    temp = float(weatherRow['main']['temp']) - KELVIN_CONSTANT
+                    temp = round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
                     weather = weatherRow['weather'][0]['icon']
                     dayForecast["night"] = {
                             "temp": temp,
@@ -50,7 +48,7 @@ class ForecastController:
                         }
                 elif rowDate.hour == 12:
                     #creo el clima a la mañana
-                    temp = float(weatherRow['main']['temp']) - KELVIN_CONSTANT
+                    temp = round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
                     weather = weatherRow['weather'][0]['icon']
                     dayForecast["day"] = {
                             "temp": temp,
