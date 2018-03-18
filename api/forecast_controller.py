@@ -19,7 +19,7 @@ class ForecastController:
             5 dias para una determinada ciudad.
         """
         url = self._getUrl(city_id)
-        # url = "http://demo9410278.mockable.io/forecast"
+        # url de mock: "http://demo9410278.mockable.io/forecast"
         forecastResponse = requests.get(url)
         jsonData = forecastResponse.json()
 
