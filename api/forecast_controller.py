@@ -58,7 +58,7 @@ class ForecastController:
                         acumDay = acumDay + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
                         iDay = iDay + 1
 
-                    if rowDate.hour == 21:
+                    if rowDate.hour == 6:
                         weatherNight = weatherRow['weather'][0]['icon']
                     if rowDate.hour == 12:
                         weatherDay = weatherRow['weather'][0]['icon']
@@ -87,7 +87,7 @@ class ForecastController:
                         acumDay = acumDay + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
                         iDay = iDay + 1
 
-                    if rowDate.hour == 21:
+                    if rowDate.hour == 6:
                         weatherNight = weatherRow['weather'][0]['icon']
                     if rowDate.hour == 12:
                         weatherDay = weatherRow['weather'][0]['icon']
