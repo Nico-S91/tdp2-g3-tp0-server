@@ -66,8 +66,16 @@ class ForecastController:
                     currentDay = rowDate.day
 
                     #Cambio el dia, entonces hay que subir los acumulados anteriores calculando el promedio
-                    tempDay = round(float(acumDay / iDay), 2)
-                    tempNight = round(float(acumNight / iNight), 2)
+                    if iDay == 0:
+                        tempDay = 9999
+                    else:
+                        tempDay = round(float(acumDay / iDay), 2)
+                    
+                    if iNight == 0:
+                        tempNight = 9999
+                    else:
+                        tempNight = round(float(acumNight / iNight), 2)
+                    
                     dayForecast["night"] = {
                         "temp": tempNight,
                         "weather": weatherNight
@@ -99,8 +107,16 @@ class ForecastController:
                             weatherDay = weatherRow['weather'][0]['icon'].replace("n", "d")
 
             #falta agregar el ultimo dia
-            tempDay = round(float(acumDay / iDay), 2)
-            tempNight = round(float(acumNight / iNight), 2)
+            if iDay == 0:
+                tempDay = 9999
+            else:
+                tempDay = round(float(acumDay / iDay), 2)
+            
+            if iNight == 0:
+                tempNight = 9999
+            else:
+                tempNight = round(float(acumNight / iNight), 2)
+
             dayForecast["night"] = {
                 "temp": tempNight,
                 "weather": weatherNight
