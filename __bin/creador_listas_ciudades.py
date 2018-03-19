@@ -6,9 +6,9 @@ import codecs
 #Ruta para los archivos de las ciudades
 RUTA = 'data/ciudades/ciudades'
 #Ruta para los archivos de las ciudades
-DIR_CIUDADES = 'data/ciudades/ciudades.json'
+DIR_CIUDADES = 'data/ciudades/city.list.json'
 
-CANT_CIUDADES_MAX = 2
+CANT_CIUDADES_MAX = 1000
 
 def crear_listados():
     lista = json.load(codecs.open(DIR_CIUDADES, 'r', 'utf-8'))
