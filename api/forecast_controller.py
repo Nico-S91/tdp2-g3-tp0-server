@@ -54,14 +54,13 @@ class ForecastController:
                     if (rowDate.hour == 21 or rowDate.hour == 0 or rowDate.hour == 3 or rowDate.hour == 6):
                         acumNight = acumNight + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
                         iNight = iNight + 1
+                        if weatherNight == "":
+                            weatherNight = weatherRow['weather'][0]['icon'].replace("d", "n")
                     else:
                         acumDay = acumDay + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
                         iDay = iDay + 1
-
-                    if rowDate.hour == 6:
-                        weatherNight = weatherRow['weather'][0]['icon'].replace("d", "n")
-                    if rowDate.hour == 12:
-                        weatherDay = weatherRow['weather'][0]['icon']
+                        if weatherDay == "":
+                            weatherDay = weatherRow['weather'][0]['icon'].replace("n", "d")
                 else:
                     #actualizo el current day
                     currentDay = rowDate.day
@@ -80,18 +79,24 @@ class ForecastController:
                     result['forecast'].append(dayForecast)
                     dayForecast = {}
 
+                    iDay = 0
+                    iNight = 0
+                    acumDay = 0
+                    acumNight = 0
+                    weatherDay = ""
+                    weatherNight = ""
+
                     if (rowDate.hour == 21 or rowDate.hour == 0 or rowDate.hour == 3 or rowDate.hour == 6):
                         acumNight = acumNight + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
                         iNight = iNight + 1
+                        if weatherNight == "":
+                            weatherNight = weatherRow['weather'][0]['icon'].replace("d", "n")
                     else:
                         acumDay = acumDay + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
                         iDay = iDay + 1
+                        if weatherDay == "":
+                            weatherDay = weatherRow['weather'][0]['icon'].replace("n", "d")
 
-                    if rowDate.hour == 6:
-                        weatherNight = weatherRow['weather'][0]['icon'].replace("d", "n")
-                    if rowDate.hour == 12:
-                        weatherDay = weatherRow['weather'][0]['icon']
-            
             #falta agregar el ultimo dia
             tempDay = round(float(acumDay / iDay), 2)
             tempNight = round(float(acumNight / iNight), 2)
