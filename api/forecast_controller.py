@@ -79,6 +79,19 @@ class ForecastController:
                     }
                     result['forecast'].append(dayForecast)
                     dayForecast = {}
+            
+            #falta agregar el ultimo dia
+            tempDay = round(float(acumDay / iDay), 2)
+            tempNight = round(float(acumNight / iNight), 2)
+            dayForecast["night"] = {
+                "temp": tempNight,
+                "weather": weatherNight
+            }
+            dayForecast["day"] = {
+                "temp": tempDay,
+                "weather": weatherDay
+            }
+            result['forecast'].append(dayForecast)
 
             result['code'] = 200
             return result
