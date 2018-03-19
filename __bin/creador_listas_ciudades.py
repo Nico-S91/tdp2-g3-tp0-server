@@ -11,7 +11,7 @@ DIR_CIUDADES = 'data/ciudades/city.list.json'
 CANT_CIUDADES_MAX = 1000
 
 def crear_listados():
-    lista = json.load(codecs.open(DIR_CIUDADES, 'r', 'utf-8'))
+    lista = obtenerListaOrdenada()
     #Recorremos la lista y creamos los nuevos archivos
     pagina = 1
     cant_ciudades = 0
@@ -35,6 +35,14 @@ def guardar_ciudades(lista_ciudades, ruta):
     print(ruta)
     with open(ruta, 'w') as f:
         json.dump(lista_ciudades, f)
+
+def obtenerListaOrdenada():
+    lista = json.load(codecs.open(DIR_CIUDADES, 'r', 'utf-8'))
+    lista.sort(key=ordenar_por_ciudad)
+    return lista
+
+def ordenar_por_ciudad(info):
+    return info.get('name', None)
 
 print("Se crearan las listas de ciudades")
 crear_listados()
