@@ -81,7 +81,7 @@ class ForecastController:
                     dayForecast = {}
 
             result['code'] = 200
-            return jsonify(result)
+            return result
         else:
             #se produjo un error
             result['code'] = 500

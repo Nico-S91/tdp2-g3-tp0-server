@@ -1,11 +1,11 @@
 from flask import Flask
-from api.forecast_controller import ForecastController
+from api.clima_controller import ClimaController
 from api.ciudades_controller import CiudadesController
 from flask import jsonify
 
 app = Flask(__name__)
 
-FORECAST_CONTROLLER = ForecastController()
+FORECAST_CONTROLLER = ClimaController()
 CIUDADES_CONTROLLER = CiudadesController()
 
 @app.route('/')
@@ -17,7 +17,7 @@ def index():
 def get_forecast(city_id):
     """ Endpoint que devuelve el pronostico del clima
         de una determinada ciudad."""
-    response = FORECAST_CONTROLLER.getForecast(city_id)
+    response = FORECAST_CONTROLLER.getClimaCiudad(city_id)
     return response
 
 @app.route('/api/v1/cities/<int:page_id>', methods=['GET'])
