@@ -2,8 +2,8 @@ from api.forecast_controller import ForecastController
 import time
 import json
 
-#Tiempo maximo es 10 min, lo uso en milisegundos
-TIEMPO_MAX = 10 * 60 * 1000
+#Tiempo maximo es 1seg, lo uso en milisegundos
+TIEMPO_MAX = 1 * 1000
 
 #Este codigo va a indicarle al cliente que tiene que esperar para pedir nuevamente la info a la API
 CODE_ESPERAR = 400
@@ -23,7 +23,7 @@ class ClimaCache:
     def obtener_info_ciudad(self, ciudad_id):
         resultado = {}
         if ciudad_id is None:
-            resultado['code'] = CODE_ESPERAR
+            resultado['code'] = CODE_SIN_CIUDAD
             return resultado
         if self.ultima_vez_invocado is not None:
             fecha_ahora = int(round(time.time() * 1000))
