@@ -56,6 +56,4 @@ class ClimaCache:
             return respuesta
 
     def obtener_info_api(self, ciudad_id):
-        res = {"code":200,"forecast":[{"day":{"temp":24.72495993583186,"weather":"02d"},"night":{"temp":20.397672523433844,"weather":"02n"}},{"day":{"temp":19.126333049992787,"weather":"04d"},"night":{"temp":15.672498729341998,"weather":"01n"}},{"day":{"temp":21.351756099054843,"weather":"02d"},"night":{"temp":23.658643624538698,"weather":"03n"}},{"day":{"temp":27.064653499927406,"weather":"03d"},"night":{"temp":18.112496966329527,"weather":"01n"}},{"day":{"temp":15.20555024637092,"weather":"02d"},"night":{"temp":17.892319110983326,"weather":"02n"}}]}
-        return res
-        # return FORESCAST_API.getForecast(ciudad_id)        
+        return FORESCAST_API.getForecast(ciudad_id)        
