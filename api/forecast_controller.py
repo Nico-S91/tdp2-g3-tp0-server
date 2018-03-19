@@ -59,7 +59,7 @@ class ForecastController:
                         iDay = iDay + 1
 
                     if rowDate.hour == 6:
-                        weatherNight = weatherRow['weather'][0]['icon']
+                        weatherNight = weatherRow['weather'][0]['icon'].replace("d", "n")
                     if rowDate.hour == 12:
                         weatherDay = weatherRow['weather'][0]['icon']
                 else:
@@ -88,7 +88,7 @@ class ForecastController:
                         iDay = iDay + 1
 
                     if rowDate.hour == 6:
-                        weatherNight = weatherRow['weather'][0]['icon']
+                        weatherNight = weatherRow['weather'][0]['icon'].replace("d", "n")
                     if rowDate.hour == 12:
                         weatherDay = weatherRow['weather'][0]['icon']
             
