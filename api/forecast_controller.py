@@ -79,6 +79,18 @@ class ForecastController:
                     }
                     result['forecast'].append(dayForecast)
                     dayForecast = {}
+
+                    if (rowDate.hour == 21 or rowDate.hour == 0 or rowDate.hour == 3 or rowDate.hour == 6):
+                        acumNight = acumNight + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
+                        iNight = iNight + 1
+                    else:
+                        acumDay = acumDay + round(float(weatherRow['main']['temp']) - KELVIN_CONSTANT, 2)
+                        iDay = iDay + 1
+
+                    if rowDate.hour == 0:
+                        weatherNight = weatherRow['weather'][0]['icon']
+                    if rowDate.hour == 12:
+                        weatherDay = weatherRow['weather'][0]['icon']
             
             #falta agregar el ultimo dia
             tempDay = round(float(acumDay / iDay), 2)
@@ -106,6 +118,7 @@ class ForecastController:
         """ Devuelve la url formada para pegarle a la api del clima
             @city_id id de la ciudad
         """
+        # return "http://demo4909478.mockable.io/api/v1/forecast/1"
         return FORECAST_URL + "?id=" + str(city_id) + "&appid=" + FORECAST_API_KEY
 
     def _parseTime(self, dateString):
@@ -116,6 +129,7 @@ class ForecastController:
         dateTime = dateParse[2].split(" ")
         dateParse[2] = dateTime[0]
         dateTime = dateTime[1].split(":")
+
         #creo el objeto DateTime
         result = DateTime(int(dateParse[2]), int(dateParse[1]), int(dateParse[0]), int(dateTime[0]), int(dateTime[1]), int(dateTime[2]))
         return result
