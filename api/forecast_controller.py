@@ -76,6 +76,7 @@ class ForecastController:
                         "temp": tempDay,
                         "weather": weatherDay
                     }
+
                     result['forecast'].append(dayForecast)
                     dayForecast = {}
 
@@ -108,7 +109,9 @@ class ForecastController:
                 "temp": tempDay,
                 "weather": weatherDay
             }
-            result['forecast'].append(dayForecast)
+
+            if len(result['forecast']) < 5:
+                result['forecast'].append(dayForecast)
 
             result['code'] = 200
             return result
@@ -123,7 +126,8 @@ class ForecastController:
         """ Devuelve la url formada para pegarle a la api del clima
             @city_id id de la ciudad
         """
-        # return "http://demo4909478.mockable.io/api/v1/forecast/1"
+        if city_id == "testUrl":
+            return "http://demo4909478.mockable.io/api/v1/forecast/1"
         return FORECAST_URL + "?id=" + str(city_id) + "&appid=" + FORECAST_API_KEY
 
     def _parseTime(self, dateString):
